@@ -1,9 +1,8 @@
 import webpack from "webpack";
-import WebpackDevServer from "webpack-dev-server";
 import config from "../config/webpack.dev.js";
+import WebpackDevServer from "webpack-dev-server";
 
 const devServerConfig = {
-    hot: true,
     proxy: {
         // proxies for the backend
         "/api": "http://localhost:3000",
@@ -15,13 +14,14 @@ const devServerConfig = {
     },
 };
 
-export default function then(port, resolve) {
-    new WebpackDevServer(webpack(config), devServerConfig).start(port, (err) => {
+export async function startFrontendDevServer(port, resolve) {
+    resolve(1);
+    await new WebpackDevServer(webpack(config), devServerConfig).start(port, (err) => {
         if (err) {
             console.log(err);
         }
-
-        console.log("Listening on port " + port);
     });
-    resolve(1);
+    console.log(
+        "\n\n-------Successfully started dev server on http://localhost:8080-----------\n\n"
+    );
 }

@@ -135,7 +135,7 @@ export default function startBackendServer(port) {
      */
     app.post("/api/upload", function (req, res) {
         //File upload
-        var form = new formidable.IncomingForm(); //Receive form
+        var form = formidable({}); //Receive form
         var formData = {
             files: {},
             fields: {},
@@ -208,7 +208,7 @@ export default function startBackendServer(port) {
      *
      * @apiSuccess {String} body returns "done" as text
      * @apiError {Number} 401 Unauthorized
-     * 
+     *
      * @apiExample {curl} Example usage to draw a circle:
      * curl -i http://[rootUrl]/api/drawToWhiteboard?wid=[MyWhiteboardId]&t=circle&d=[388,201,100]&th=4
      */
@@ -230,13 +230,13 @@ export default function startBackendServer(port) {
             broadcastTo(readOnlyId);
             try {
                 query.th = parseFloat(query.th);
-            } catch(e) {
+            } catch (e) {
                 //Dont do a thing
             }
 
             try {
-                query.d = JSON.parse(query.d)
-            } catch(e) {
+                query.d = JSON.parse(query.d);
+            } catch (e) {
                 //Dont do a thing
             }
             s_whiteboard.handleEventsAndData(query); //save whiteboardchanges on the server
